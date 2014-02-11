@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+# vim:filetype=python
+import sys
+import re
+import k.aws.config
+import k.stdlib.logging.config
+from optparse import OptionParser
+from ssh_helper.config import get_user_config
+from ssh_helper.connect import report_and_connect
+from ssh_helper.search import search
+import json
+
+def parse_stdin():
+	retarr = []
+	if not sys.stdin.isatty():
+		lines = sys.stdin.readlines()
+		try:
+			struct = json.loads("".join(lines))
+			if struct.has_key('rows'):
+				retarr = [o.keys()[0].strip() for o in struct['rows']]
+		except:
+			for line in lines:
+				if line.strip() != "":
+					retarr.append(line.strip())
+	return retarr
+
+def is_range(arg):
+	if arg == 'all':
+		return True
+	if re.match('^[0-9,-]*$', arg):
+		return True
+	return False
+
+def main():
+	parser = option_parser()
+	(options, args) = parser.parse_args()
+	k.stdlib.logging.config.configure_logging(options)
+	search_strings = []
+	ssh_range = None
+	search_strings.extend(parse_stdin())
+	search_strings.extend([arg.lower() for arg in args])
+	if len(search_strings) > 0 and is_range(search_strings[-1]):
+		ssh_range = search_strings.pop()
+	user_config = get_user_config()
+	instances = search(options, search_strings)
+	report_and_connect(options, user_config, instances, ssh_range, options.search)
+
+def option_parser():
+	usage = "usage: %prog [options] search_string(s) [ssh range]\n\n"
+	usage += "Give the system an environment and a search string. "
+	usage += "The search strings will match on any of:\n"
+	usage += "  * instance id\n"
+	usage += "  * security groups\n"
+	usage += "  * public/private dns/ip\n"
+	usage += "  * tags\n"
+	usage += "  * nagios canonical instance name\n"
+	usage += "    (No environment needed if using only nagios canonical instance names)\n\n"
+	usage += "You can do set logic on results.  By passing in multiple search strings, you can alter the final resturned set.  Each set operation is against the setthat has been created thus far up to that arg.\n"
+	usage == "  * starting a search string with + will do a union\n"
+	usage += "  * starting a search string with - will do a difference\n"
+	usage += "  * starting a search string with ^ will do an intersection\n"
+	usage += "  * additional args with no set character is an implicit intersection\n\n"
+	usage += "If you do not pass in an ssh range, if only one box is found, it"
+	usage += " will ssh to it.  If multiple are found, it will return a list of boxes.\n"
+	usage += "If you pass in an ssh range, it will ssh to the box(es) using ssh for one box or cssh for multiple\n"
+	usage += "  ssh range can look like the following:\n"
+	usage += "  * 1\n"
+	usage += "  * 2,4,5\n"
+	usage += "  * 3-10\n"
+	usage += "  * 3-10,12-13\n"
+	usage += "  * all\n\n"
+	usage += "ssh helper can also take search strings on stdin in the form of a list, or the json output from knife search.  The servers passed in will be treated as the first set if any additional search strings are added\n"
+	parser = OptionParser(usage=usage)
+	k.stdlib.logging.config.get_logging_options(parser, loglevel='critical')
+	k.aws.config.get_aws_options(parser)
+	parser.add_option("--args", dest="ssh_args", help="Args in the form of a string to pass through to the final command")
+	parser.add_option("-a", "--action", dest="ssh_command", help="A command to run against the destination")
+	parser.add_option("-s", "--search", dest="search", action="store_true", default=False, help="perform a search only (don't ssh to box)")
+	parser.disable_interspersed_args()
+	return parser
+
+if __name__=='__main__':
+	main()
