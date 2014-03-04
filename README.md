@@ -51,12 +51,14 @@ the program will return a list of servers that meet your search string. the sear
 
 
 If your search finds only one box that meets the conditions, it will ssh to that box
+
     $ hss s i-095b5d66
     running 2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
      
     [opening ssh session]
 
 You can then ssh to a server by number from the list:
+
     $ hss s nagios
     0. running  2013-02-01T20:52    i-bad75fca  ec2-50-17-16-29.compute-1.amazonaws.com Kerberos    nagios,base
     1. running  2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
@@ -68,6 +70,7 @@ You can then ssh to a server by number from the list:
     [opening ssh session]
 
 If you have cssh installed, or have configured ssh helper to use an alternate multi ssh tool you can ssh to multiple boxes at once:
+
     $ hss s nagios 1,3
     0. running  2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
     1. running  2013-06-12T14:50    i-b4e9cade  ec2-107-21-173-225.compute-1.amazonaws.com  Kerberos    wonderwoman-nagios-nagiossecuritygroup-1a0v6oy7jig0z,wonderwoman_kcs,base,nagios_wonderwoman_kcs,wonderwoman-nagios
