@@ -101,6 +101,7 @@ The search can use set logic to narrow or increase the server list.  The ssh hel
     <opening ssh session>
 
 *union example*
+
     $ ussh techbot
     running 2013-04-27T20:03    i-307d165e  ec2-54-224-231-194.compute-1.amazonaws.com  Kerberos    base,techbot
      
@@ -112,6 +113,7 @@ The search can use set logic to narrow or increase the server list.  The ssh hel
     1. running  2013-04-27T20:03    i-307d165e  ec2-54-224-231-194.compute-1.amazonaws.com  Kerberos    base,techbot
 
 *difference example*
+
     $ ussh graphite staging
     0. running  2013-07-02T19:38    i-1a0d1d74  ec2-54-226-212-38.compute-1.amazonaws.com   Kerberos    base,graphite,graphite-relay,facet=relay,cluster=staging
     1. running  2013-06-17T21:40    i-fa1cac94  ec2-50-16-2-85.compute-1.amazonaws.com  Kerberos    base,graphite,facet=cache,cluster=staging
