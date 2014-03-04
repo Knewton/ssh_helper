@@ -54,7 +54,7 @@ If your search finds only one box that meets the conditions, it will ssh to that
     $ hss s i-095b5d66
     running 2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
      
-    <opening ssh session>
+    [opening ssh session]
 
 You can then ssh to a server by number from the list:
     $ hss s nagios
@@ -65,7 +65,7 @@ You can then ssh to a server by number from the list:
     $ hss s nagios 1
     running 2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
     
-    <opening ssh session>
+    [opening ssh session]
 
 If you have cssh installed, or have configured ssh helper to use an alternate multi ssh tool you can ssh to multiple boxes at once:
     $ hss s nagios 1,3
@@ -73,7 +73,7 @@ If you have cssh installed, or have configured ssh helper to use an alternate mu
     1. running  2013-06-12T14:50    i-b4e9cade  ec2-107-21-173-225.compute-1.amazonaws.com  Kerberos    wonderwoman-nagios-nagiossecuritygroup-1a0v6oy7jig0z,wonderwoman_kcs,base,nagios_wonderwoman_kcs,wonderwoman-nagios
     Opening to: ec2-54-226-42-232.compute-1.amazonaws.com ec2-107-21-173-225.compute-1.amazonaws.com
      
-    <Opening a cluster ssh session>
+    [Opening a cluster ssh session]
 
 
 ssh helper has some powerful search features.  You can search for a box by substring from any of the following:
@@ -98,7 +98,7 @@ The search can use set logic to narrow or increase the server list.  The ssh hel
      
     $ hss s nagios api
     running 2013-06-05T03:37    i-095b5d66  ec2-54-226-42-232.compute-1.amazonaws.com   Kerberos    nagios_apiuat_kcs,apiuat_kcs,base,apiuat-nagios-nagiossecuritygroup-9jzszob9vzqy,apiuat-nagios
-    <opening ssh session>
+    [opening ssh session]
 
 *union example*
 
