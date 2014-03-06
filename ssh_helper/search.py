@@ -43,30 +43,21 @@ def list_instances(ec2conn, env):
 			if tagdict.has_key('aws:cloudformation:logical-id'):
 				del tagdict['aws:cloudformation:logical-id']
 			tags = ["%s=%s" % (tag.lower(), tagdict[tag].lower()) for tag in tagdict.keys()]
-			auth = "RSA-Only"
-			if "kerberoskeytabisdeployed=true" in tags:
-				auth = "Kerberos"
-				tags.remove("kerberoskeytabisdeployed=true")
 			instances.add((instance, tuple(groups), tuple(tags), auth, env))
 	return instances
 
 def get_list(cache, options):
-	if not options.knewton_env:
+	if not options.aws_env:
 		sys.stderr.write("No environment passed in\n")
 		sys.exit(1)
-	if not cache.has_key(options.knewton_env):
+	if not cache.has_key(options.aws_env):
 		creds = k.aws.config.get_keys(options)
 		ec2conn = k.aws.ec2.connect(creds)
-		cache[options.knewton_env] = list_instances(ec2conn, options.knewton_env)
-	return cache[options.knewton_env]
+		cache[options.aws_env] = list_instances(ec2conn, options.aws_env)
+	return cache[options.aws_env]
 
 def find_instances(options, cache, search_string):
 	parts = search_string.split(".")
-	if len(parts) == 7 and parts[5] == 'knewton' and parts[6] == 'net':
-		# Canonical format:
-		# i-eebbef96.us-east-1d.cassandra.qa.staging.knewton.net
-		options = k.aws.config.ManualOptions(knewton_env=parts[4])
-		search_string = parts[0]
 	winners = set()
 	for instance, groups, tags, auth, env in get_list(cache, options):
 		if match_instance(instance, groups, search_string):

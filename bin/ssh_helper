@@ -53,8 +53,6 @@ def option_parser():
 	usage += "  * security groups\n"
 	usage += "  * public/private dns/ip\n"
 	usage += "  * tags\n"
-	usage += "  * nagios canonical instance name\n"
-	usage += "    (No environment needed if using only nagios canonical instance names)\n\n"
 	usage += "You can do set logic on results.  By passing in multiple search strings, you can alter the final resturned set.  Each set operation is against the setthat has been created thus far up to that arg.\n"
 	usage == "  * starting a search string with + will do a union\n"
 	usage += "  * starting a search string with - will do a difference\n"

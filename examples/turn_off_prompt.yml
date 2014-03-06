@@ -7,12 +7,7 @@ cssh_per_host_args: '[]'
 group_color: "\\[\e[1;36m\\]"
 group_prompt: FG_BOLD["white"] + "(" + config["group_color"] + self.group + FG_BOLD["white"]
   + ")" + RESET + " "
-kcs_color: "\\[\e[1;36m\\]"
-kcs_prompt: FG_BOLD["white"] + "(" + config["kcs_color"] + self.kcs + "-" + self.stack
-  + FG_BOLD["white"] + ")" + RESET + " "
 overrides:
-  biggie: {kcs_color: "\\[\e[1;31m\\]"}
-  production: {aws_color: "\\[\e[1;31m\\]"}
-  uat: {aws_color: "\\[\e[1;31m\\]"}
+  staging: {aws_color: "\\[\e[1;31m\\]"}
 prompt: null
 ssh_command: '["ssh", "-o", "StrictHostKeyChecking=no"]'

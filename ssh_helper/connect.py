@@ -96,18 +96,10 @@ def report_and_connect(options, user_config, winners, ssh_range, search):
 	winners.sort(cmp_instance)
 
 	ssh_winners = []
-	no_kerb = []
 	for i in range(0, len(winners)):
 		if i in range_set:
-			if winners[i][3] == 'RSA-Only':
-				no_kerb.append((i, winners[i]))
-			else:
-				ssh_winners.append(winners[i])
+			ssh_winners.append(winners[i])
 
-	if not search:
-		for i, fail in no_kerb:
-			print "CAN ONLY SSH TO KERBERIZED INSTANCES: %s. %s" % (i, print_instance(fail))
-			winners.remove(fail)
 	if len(ssh_winners) == 1 and not search:
 		open_ssh_connection(options, user_config, ssh_winners[0])
 	elif len(ssh_winners) > 1 and not search:

@@ -14,24 +14,18 @@ def default_prompt_configs():
 		'aws_color': FG['yellow'],
 		'aws_prompt': 'FG_BOLD["white"] + "[" + config["aws_color"] + ' +
 			'self.aws + FG_BOLD["white"] + "]" + RESET + " "',
-		'kcs_color': FG_BOLD['cyan'],
-		'kcs_prompt': 'FG_BOLD["white"] + "(" + config["kcs_color"] + ' +
-			'self.kcs + "-" + self.stack + FG_BOLD["white"] + ")" + RESET + " "',
 		'group_color': FG_BOLD['cyan'],
 		'group_prompt': 'FG_BOLD["white"] + "(" + config["group_color"] + ' +
 			'self.group + FG_BOLD["white"] + ")" + RESET + " "',
-		'prompt': 'self.aws_prompt() + self.kcs_or_group_prompt() + ' +
+		'prompt': 'self.aws_prompt() + self.group_prompt() + ' +
 			'FG_BOLD["green"] + "\u@\h" + FG_BOLD["white"] + ":" + ' +
 			'FG_BOLD["yellow"] + "\w" + FG_BOLD["white"] + " $" + RESET  + " "',
 		'overrides': {
 			'production': {
 				'aws_color': FG_BOLD['red'],
 			},
-			'uat': {
+			'staging': {
 				'aws_color': FG_BOLD['red'],
-			},
-			'biggie': {
-				'kcs_color': FG_BOLD['red'],
 			}
 		}
 	}

@@ -8,19 +8,9 @@ class Prompt(object):
 		self.groups = instance[1]
 		self.tags = instance[2]
 		self.aws = instance[4]
-		self.kcs = None
 		self.stack = None
 		self.group = None
-		self.get_kcs()
 		self.get_group()
-
-	def get_kcs(self):
-		for group in self.groups:
-			if group.find('kcs') > -1:
-				parts = group.split('_')
-				if len(parts) == 3 and parts[2] == 'kcs':
-					self.kcs = parts[1]
-					self.stack = parts[0]
 
 	def get_group(self):
 		testgroups = []
@@ -68,18 +58,6 @@ class Prompt(object):
 					pass
 		return retstr
 
-	def kcs_prompt(self):
-		retstr = ""
-		if self.kcs:
-			config = get_overridden_config(self.user_config, self.kcs)
-			code = config.get('kcs_prompt', '')
-			if code:
-				try:
-					return eval(code)
-				except TypeError:
-					pass
-		return retstr
-
 	def group_prompt(self):
 		retstr = ""
 		if self.group:
@@ -91,12 +69,3 @@ class Prompt(object):
 				except TypeError:
 					pass
 		return retstr
-
-	def kcs_or_group_prompt(self):
-		retstr = ""
-		if self.kcs:
-			return self.kcs_prompt()
-		elif self.group:
-			return self.group_prompt()
-		return retstr
-
